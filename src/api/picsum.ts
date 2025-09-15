@@ -45,21 +45,6 @@ export const getRandomImageUrl = (width: number, height: number) => {
 };
 
 /**
- * 取得單張隨機圖片 URL
- * @param width 圖片寬度
- * @param height 圖片高度
- * @returns Promise<string> 圖片 URL
- */
-// export const getRandomImageUrl2 = (width: number, height: number): Promise<string> => {
-//   return request<string>({
-//     url: `/${width}/${height}`,
-//     method: "GET",
-//     baseURL: "https://picsum.photos",
-//   });
-// };
-
-
-/**
  * 取得指定 ID 的圖片 (直接回傳圖片 URL，不是 JSON)
  * @param id 圖片 ID
  * @param width 圖片寬度

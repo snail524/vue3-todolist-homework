@@ -1,21 +1,13 @@
 <script setup lang="ts">
   import { defineProps, defineEmits } from 'vue'
   import ButtonComponent from './ButtonComponent.vue'
+  import type { Todo, ImageState } from '../types/index.ts' // 從 index.ts 統一匯入
 
-  // 定義 Todo 類型
-  interface Todo {
-    id: number
-    title: string
-    startDate: string
-    endDate: string
-    image: string
-    content: string
-  }
   // 定義 props
   defineProps<{
     todos: Todo[]
     selectedId: number | null
-    imgSample: string
+    imgSampleObj: ImageState // 這裡改為使用 ImageState 類型
   }>()
 
   // 定義事件
@@ -88,8 +80,15 @@
         </ButtonComponent>
       </div>
     </div>
-    <div class="w-4/5 mx-auto mb-4">
-      <img class="w-full h-auto" :src="imgSample" alt="" @click="changeImg" />
+    <div class="w-4/5 mx-auto mb-4 relative">
+      <img
+        v-if="imgSampleObj.src"
+        class="w-full h-auto"
+        :src="imgSampleObj.src"
+        alt=""
+        @click="changeImg"
+      />
+      <span v-if="imgSampleObj.loading">圖片載入中...</span>
     </div>
   </div>
 </template>

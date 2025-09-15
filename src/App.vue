@@ -1,18 +1,10 @@
 <script setup lang="ts">
-  import { ref, onMounted, watch } from 'vue'
+  import { ref, reactive, onMounted, watch } from 'vue'
   import TodoSlider from './components/TodoSlider.vue'
   import TodoDetail from './components/TodoDetail.vue'
 
   import { getPicsumById } from './api/picsum.ts'
-
-  interface Todo {
-    id: number
-    title: string
-    startDate: string
-    endDate: string
-    image: string
-    content: string
-  }
+  import type { Todo } from './types/index.ts' // 從 index.ts 統一匯入
 
   // 樣本數據
   const sampleTodos: Todo[] = [
@@ -39,6 +31,10 @@
   const todos = ref<Todo[]>([])
   const selectedId = ref<number | null>(null)
   const currentTodo = ref<Todo | null>(null)
+  const imgSampleObj = reactive({
+    src: '',
+    loading: false,
+  })
   const imgSample = ref('')
 
   // 格式化日期為 yyyy/mm/dd
@@ -51,13 +47,16 @@
   let index = 1
 
   const getImg = () => {
+    imgSample.value = ''
+    imgSampleObj.src = ''
+
+    imgSampleObj.loading = true
     getPicsumById(index).then((res) => {
-      imgSample.value = res.download_url
+      imgSampleObj.src = res.download_url
+      imgSampleObj.loading = false
+
       index++
     })
-  }
-  const changeImg = () => {
-    getImg()
   }
 
   // 初始化數據
@@ -87,12 +86,13 @@
     }
 
     todos.value.push(newTodo)
-    selectedId.value = newTodo.id
-    currentTodo.value = newTodo
+    selectTodo(newTodo.id)
   }
 
   // 選擇 Todo
   const selectTodo = (id: number) => {
+    if (selectedId.value == id) return
+
     selectedId.value = id
     const todo = todos.value.find((t) => t.id === id)
     if (todo) {
@@ -128,7 +128,6 @@
       if (newTodo && selectedId.value !== null) {
         const index = todos.value.findIndex((t) => t.id === selectedId.value)
         if (index !== -1) {
-          // 使用整個對象的深拷貝來更新，確保所有字段都被更新
           todos.value[index] = { ...newTodo }
         }
       }
@@ -136,7 +135,7 @@
     { deep: true } // 深度監聽，確保對象內部屬性變化也能被檢測到
   )
 
-  const isSidebarOpen = ref(true)
+  const isSidebarOpen = ref(false)
   // 設置側邊欄狀態的函數
   const setSidebar = (isOpen: boolean) => {
     isSidebarOpen.value = isOpen
@@ -151,10 +150,10 @@
         <TodoSlider
           :todos="todos"
           :selectedId="selectedId"
-          :imgSample="imgSample"
+          :imgSampleObj="imgSampleObj"
           @select-todo="selectTodo"
           @create-todo="createTodo"
-          @changeImg="changeImg"
+          @changeImg="getImg"
         />
       </div>
     </div>
@@ -165,7 +164,7 @@
         <TodoSlider
           :todos="todos"
           :selectedId="selectedId"
-          :imgSample="imgSample"
+          :imgSampleObj="imgSampleObj"
           @select-todo="selectTodo"
           @create-todo="createTodo"
           @setSidebar="setSidebar(false)"
@@ -180,7 +179,7 @@
       <div v-if="currentTodo">
         <TodoDetail
           v-model:currentTodo="currentTodo"
-          :imgSample="imgSample"
+          :imgSampleObj="imgSampleObj"
           @delete-todo="deleteTodo"
           @set-sidebar="setSidebar"
         />

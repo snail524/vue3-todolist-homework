@@ -2,7 +2,7 @@ import axios, { type AxiosRequestConfig, type AxiosResponse } from "axios";
 
 // 建立 axios instance
 const api = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com", // 改成你的 API 網址
+  baseURL: "https://jsonplaceholder.typicode.com", 
   timeout: 10000,
 });
 

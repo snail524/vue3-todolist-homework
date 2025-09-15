@@ -38,7 +38,7 @@
               v-model="todoModel.startDate"
               style="margin-bottom: 0"
             />
-            <span class="error-message absolute text-red-500 bottom-[-0.5rem]">{{
+            <span class="error-message absolute text-red-500 bottom-[-1rem]">{{
               todoErrors.startDate
             }}</span>
 
@@ -52,7 +52,7 @@
               :min="todoModel.startDate"
               style="margin-bottom: 0"
             />
-            <span class="error-message absolute text-red-500 bottom-[-0.5rem]">{{
+            <span class="error-message absolute text-red-500 bottom-[-1rem]">{{
               todoErrors.endDate
             }}</span>
           </div>
@@ -74,9 +74,13 @@
         <div
           class="flex-1 w-full sm:w-auto border rounded flex items-center justify-center bg-gray-50 max-h-40"
         >
-          <img v-if="todoModel.image" :src="todoModel.image" class="w-full h-full object-cover" />
+          <img
+            v-if="todoModel.image"
+            :src="todoModel.image"
+            class="w-full h-full object-cover max-h-40"
+          />
           <div v-else class="text-gray-400 text-center bg-[#EBEBEB]">
-            <img :src="imgSample" class="w-full h-full object-cover" />
+            <img :src="imgSampleObj.src" class="w-full h-full object-cover max-h-40" />
           </div>
         </div>
       </div>
@@ -94,23 +98,13 @@
   import InputComponent from './InputComponent.vue'
   import TextAreaComponent from './TextAreaComponent.vue'
   import * as zod from 'zod'
-
-  // 定義 Todo 類型
-  interface Todo {
-    id: number
-    title: string
-    content: string
-    startDate: string
-    endDate: string
-    image: string
-    // 其他可能的屬性
-  }
+  import type { Todo, ImageState } from '../types/index.ts'
 
   // 使用 defineModel 來創建雙向綁定
   const todoModel = defineModel<Todo | null>('currentTodo')
 
   defineProps<{
-    imgSample: string
+    imgSampleObj: ImageState
   }>()
 
   // 定義事件
