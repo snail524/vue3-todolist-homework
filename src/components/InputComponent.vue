@@ -3,7 +3,7 @@
     <!-- 普通輸入框 -->
     <input
       v-if="type !== 'date' && type !== 'file'"
-      class="custom-input"
+      class="custom-input border-none"
       :type="type"
       :placeholder="placeholder"
       v-model="model"
@@ -12,7 +12,7 @@
     <!-- 日期輸入 -->
     <div v-else-if="type === 'date'" class="date-input-container">
       <input
-        class="custom-input"
+        class="custom-input text-center"
         type="text"
         :placeholder="placeholder"
         v-model="displayValue"
@@ -105,7 +105,6 @@
         displayValue.value = ''
         return
       }
-      console.log('110', val)
 
       // 日期格式同步
       if (val.includes('/')) {
@@ -135,8 +134,8 @@
     width: 100%;
     padding: 10px;
     border-radius: 4px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
+    border: none;
+    background-color: #e8e8e8;
     font-size: 16px;
     box-sizing: border-box;
     transition:
@@ -178,6 +177,6 @@
   }
 
   .file-placeholder:hover {
-    background-color: #d7f7d9;
+    background-color: #81f8b1;
   }
 </style>

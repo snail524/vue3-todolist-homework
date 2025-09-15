@@ -19,8 +19,8 @@
     {
       id: 1,
       title: '完成專案報告',
-      startDate: '2023/11/15',
-      endDate: '2023/11/20',
+      startDate: '2025/09/01',
+      endDate: '2025/09/20',
       image:
         'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1472&q=80',
       content: '需要完成第三季度的專案進度報告，包括所有里程碑和遇到的挑戰。',
@@ -28,8 +28,8 @@
     {
       id: 2,
       title: '購買辦公用品',
-      startDate: '2023/11/20',
-      endDate: '2023/11/25',
+      startDate: '2025/08/11',
+      endDate: '2025/08/30',
       image:
         'https://images.unsplash.com/photo-1553729459-efe14ef6055d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
       content: '需要購買新的筆記本、筆和打印紙。',
@@ -96,7 +96,6 @@
     selectedId.value = id
     const todo = todos.value.find((t) => t.id === id)
     if (todo) {
-      console.log('99', todo)
       currentTodo.value = todo
     }
   }
@@ -162,7 +161,7 @@
 
     <!-- 手機版側邊欄 (可切換顯示/隱藏) -->
     <div v-if="isSidebarOpen" class="md:hidden fixed top-0 left-0 w-full h-screen z-50 flex">
-      <div class="bg-primary w-1/2 py-4 rounded-r shadow relative h-full overflow-y-auto">
+      <div class="bg-primary w-2/3 py-4 rounded-r shadow relative h-full overflow-y-auto">
         <TodoSlider
           :todos="todos"
           :selectedId="selectedId"
@@ -173,7 +172,7 @@
         />
       </div>
       <!-- 右側半透明遮罩 -->
-      <div class="w-1/2 bg-gray-800 bg-opacity-50" @click="setSidebar(false)"></div>
+      <div class="flex-1 bg-gray-800 bg-opacity-50" @click="setSidebar(false)"></div>
     </div>
 
     <!-- 右側主要內容 -->

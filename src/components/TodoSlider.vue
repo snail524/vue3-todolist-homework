@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { defineProps, defineEmits } from 'vue'
-  import ButtonComponent from './ButtonComponent.vue' // 假設你的按鈕元件路徑
+  import ButtonComponent from './ButtonComponent.vue'
 
   // 定義 Todo 類型
   interface Todo {
@@ -62,7 +62,7 @@
           :class="
             todo.id === selectedId
               ? 'bg-active bg-opacity-50 font-bold text-gray-900'
-              : 'hover:bg-gray-100 text-gray-700'
+              : 'hover:bg-[#81F8B1] text-gray-700'
           "
         >
           <span>{{ index + 1 }}.</span>
